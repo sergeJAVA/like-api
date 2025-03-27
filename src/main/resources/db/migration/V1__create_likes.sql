@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS likes (
+    id BIGSERIAL PRIMARY KEY,
+    "userId" BIGINT NOT NULL,
+    "postId" BIGINT NOT NULL,
+    "timestamp" TIMESTAMP WITHOUT TIME ZONE
+);

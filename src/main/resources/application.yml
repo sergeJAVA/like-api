@@ -1,0 +1,21 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: like-api
+  datasource:
+    url: jdbc:postgresql://localhost:5436/likesDB
+    username: root
+    password: pass
+    platform: postgres
+    driverClassName: org.postgresql.Driver
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+
+jwt:
+  secret: secretkeyPasswordForAuth12312312312313213123123sdfsdf
+  life-time: 1800000
