@@ -3,7 +3,6 @@ package com.example.like_api.controllers;
 import com.example.like_api.model.Like;
 import com.example.like_api.services.LikeService;
 import com.example.like_api.services.security.JWTService;
-import com.example.like_api.services.security.TokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,23 +18,20 @@ public class LikeController {
     private final JWTService jwtService;
 
     @GetMapping("/all")
-    List<Like> allLikes() {
+    public List<Like> allLikes() {
         return likeService.getAllLikes();
     }
 
     @PostMapping("/{postId}")
     public ResponseEntity<String> addLike(@PathVariable Long postId, @CookieValue("token") String token) {
         Long userId = jwtService.getUserIdFromToken(token);
-
-        likeService.addLike(postId, userId);
-        return ResponseEntity.ok("LIKE successfully added!");
+        return likeService.addLike(postId, userId);
     }
 
     @DeleteMapping("/{postId}")
     public ResponseEntity<String> removeLike(@PathVariable Long postId, @CookieValue("token") String token) {
         Long userId = jwtService.getUserIdFromToken(token);
-        likeService.removeLike(postId, userId);
-        return ResponseEntity.ok("Like successfully deleted!");
+        return likeService.removeLike(postId, userId);
     }
 
     @GetMapping("/{postId}/count")

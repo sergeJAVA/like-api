@@ -3,6 +3,8 @@ package com.example.like_api.services;
 import com.example.like_api.model.Like;
 import com.example.like_api.repository.LikeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +19,7 @@ public class LikeServiceImpl implements LikeService{
     private final LikeRepository likeRepository;
 
     @Override
-    public void addLike(Long postId, Long userId) {
+    public ResponseEntity<String> addLike(Long postId, Long userId) {
         if (!isLiked(postId, userId)) {
             Like like = Like.builder()
                     .postId(postId)
@@ -25,13 +27,19 @@ public class LikeServiceImpl implements LikeService{
                     .timestamp(LocalDateTime.now())
                     .build();
             likeRepository.save(like);
+            return ResponseEntity.ok("LIKE successfully added!");
         }
+        return new ResponseEntity<>("User has already liked this post", HttpStatus.BAD_REQUEST);
     }
 
     @Override
     @Transactional
-    public void removeLike(Long postId, Long userId) {
-        likeRepository.deleteByPostIdAndUserId(postId, userId);
+    public ResponseEntity<String> removeLike(Long postId, Long userId) {
+        if (isLiked(postId, userId)) {
+            likeRepository.deleteByPostIdAndUserId(postId, userId);
+            return ResponseEntity.ok("Like successfully deleted!");
+        }
+        return new ResponseEntity<>("User hasn't liked this post yet", HttpStatus.BAD_REQUEST);
     }
 
     @Override
