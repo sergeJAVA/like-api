@@ -15,7 +15,16 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
-
 jwt:
   secret: secretkeyPasswordForAuth12312312312313213123123sdfsdf
   life-time: 1800000
+
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        boot:
+#          context:
+#            config: TRACE
+#        core:
+#          env: TRACE

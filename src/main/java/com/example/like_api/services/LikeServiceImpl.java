@@ -3,6 +3,8 @@ package com.example.like_api.services;
 import com.example.like_api.model.Like;
 import com.example.like_api.repository.LikeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ public class LikeServiceImpl implements LikeService{
     private final LikeRepository likeRepository;
 
     @Override
+    @CacheEvict(value = "likesPost", key = "#postId")
     public ResponseEntity<String> addLike(Long postId, Long userId) {
         if (!isLiked(postId, userId)) {
             Like like = Like.builder()
@@ -34,6 +37,7 @@ public class LikeServiceImpl implements LikeService{
 
     @Override
     @Transactional
+    @CacheEvict(value = "likesPost", key = "#postId")
     public ResponseEntity<String> removeLike(Long postId, Long userId) {
         if (isLiked(postId, userId)) {
             likeRepository.deleteByPostIdAndUserId(postId, userId);
@@ -43,6 +47,7 @@ public class LikeServiceImpl implements LikeService{
     }
 
     @Override
+    @Cacheable(value = "likesPost", key = "#postId")
     public Long getLikesCount(Long postId) {
         return likeRepository.countByPostId(postId);
     }
