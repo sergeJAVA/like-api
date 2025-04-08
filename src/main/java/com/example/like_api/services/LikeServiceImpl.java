@@ -47,6 +47,14 @@ public class LikeServiceImpl implements LikeService{
     }
 
     @Override
+    @Transactional
+    @CacheEvict(value = "likesPost", allEntries = true)
+    public ResponseEntity<String> removeAllLikesFromPost(Long postId) {
+        likeRepository.deleteByPostId(postId);
+        return ResponseEntity.ok("All likes from post id \"" + postId + "\" have been removed");
+    }
+
+    @Override
     @Cacheable(value = "likesPost", key = "#postId")
     public Long getLikesCount(Long postId) {
         return likeRepository.countByPostId(postId);

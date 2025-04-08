@@ -9,6 +9,7 @@ import java.util.List;
 public interface LikeService {
     ResponseEntity<String> addLike(Long postId, Long userId);
     ResponseEntity<String> removeLike(Long postId, Long userId);
+    ResponseEntity<String> removeAllLikesFromPost(Long postId);
 
     Long getLikesCount(Long postId);
     List<Long> getLikedUsers(Long postId);
