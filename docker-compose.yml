@@ -15,5 +15,4 @@ services:
     container_name: redis-likes
     ports:
       - "26379:6379"
-    environment:
-      - REDIS_PASSWORD=pass
+    command: redis-server --requirepass pass

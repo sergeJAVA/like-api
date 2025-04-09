@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: like-api
+  redis:
+    host: localhost
+    port: 26379
+    password: pass
   datasource:
     url: jdbc:postgresql://localhost:5436/likesDB
     username: root
@@ -28,3 +32,7 @@ jwt:
 #            config: TRACE
 #        core:
 #          env: TRACE
+#logging:
+#  level:
+#    org.springframework.data.redis: DEBUG
+#    io.lettuce.core: DEBUG

@@ -55,7 +55,7 @@ public class LikeServiceImpl implements LikeService{
     }
 
     @Override
-    @Cacheable(value = "likesPost", key = "#postId")
+    @Cacheable(value = "likesPost", key = "#postId", unless = "#result == 0")
     public Long getLikesCount(Long postId) {
         return likeRepository.countByPostId(postId);
     }
