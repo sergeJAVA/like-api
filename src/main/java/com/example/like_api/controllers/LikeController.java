@@ -49,9 +49,9 @@ public class LikeController {
         return ResponseEntity.ok(likeService.getLikedUsers(postId));
     }
 
-    @GetMapping("/{postId}/users/{userId}")
-    public ResponseEntity<Boolean> isLiked(@PathVariable Long postId, @PathVariable Long userId) {
-        return ResponseEntity.ok(likeService.isLiked(postId, userId));
+    @GetMapping("/{postId}/user/liked")
+    public ResponseEntity<Boolean> isLiked(@PathVariable Long postId, @CookieValue("token") String token) {
+        return ResponseEntity.ok(likeService.isLiked(postId, jwtService.getUserIdFromToken(token)));
     }
 
     @GetMapping("/users/{userId}/posts")
